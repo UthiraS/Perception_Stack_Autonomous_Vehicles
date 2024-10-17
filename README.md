@@ -1,47 +1,73 @@
-# Perception_Stack_Autonomous_Vehicles
+# Perception Stack for Autonomous Vehicles
 
- 
-Networks utilized:
+This project implements a comprehensive perception stack for autonomous vehicles, focusing on object detection, depth estimation, and lane detection. It combines various state-of-the-art neural networks to create a Tesla-like Full Self-Driving (FSD) visualization.
 
-1. Object detection (cars, traffic signs, traffic lights, speed limit sign):
+## Features
 
-We used this one for object detection: https://pytorch.org/hub/ultralytics_yolov5/
+- Object detection (cars, traffic signs, traffic lights, speed limit signs)
+- Depth estimation
+- Lane detection
+- 3D visualization of detected objects
 
-We found midpoints of the cars, traffic signs, traffic lights using the bounding boxes obtained from this network by feeding it the images.
+## Technologies Used
 
-However, we plan on using instance/panoptic segmentation network in hopes that it will provide better results for depth estimation (using average depth in the segmented part of the image)
+- Python
+- PyTorch
+- Blender (for 3D visualization)
 
-2. Depth estimation:
+## Neural Networks Utilized
 
-We used transformer based midas: https://github.com/jankais3r/Video-Depthify
+### 1. Object Detection
 
-We took the bounding boxes from object detection and found average depths in the same regions as those of bounding boxes to obtain estimated depths. However, we expect to use instance segmentation instead of object detection for better results.
+- **Primary Network**: YOLOv5 (https://pytorch.org/hub/ultralytics_yolov5/)
+  - Used for detecting cars, traffic signs, traffic lights, and speed limit signs
+  - Bounding boxes are used to calculate midpoints of detected objects
 
-3. Lane detection:
+### 2. Depth Estimation
 
-YOLO Pv2 : https://github.com/CAIC-AD/YOLOPv2
+- **Network**: MiDaS Transformer (https://github.com/jankais3r/Video-Depthify)
+  - Estimates depth for the entire image
+  - Average depth within bounding boxes is used for object depth estimation
 
-Detected the lanes through this network.
+### 3. Lane Detection
 
-Thank you!
- 
-[1] Lane Detection: https://github.com/IrohXu/lanenet-lane-detection-pytorch
+- **Network**: YOLO Pv2 (https://github.com/CAIC-AD/YOLOPv2)
+  - Specialized for lane detection
 
-[2] Monocular Depth Estimation: https://github.com/isl-org/MiDaS
+## Implementation Details
 
-[3] Object Detection: Cars, Trucks, Traffic Lights, Road Signs:
-https://github.com/xiaogangLi/tensorflow-MobilenetV1-SSD
+1. **Object Detection**: 
+   - YOLOv5 processes input images to detect relevant objects
+   - Bounding boxes are used to calculate object midpoints
 
-[4] Object Detection: Cars, Trucks, Traffic Lights, Road Signs:
-https://github.com/WongKinYiu/yolov7
+2. **Depth Estimation**:
+   - MiDaS generates a depth map for the entire image
+   - Average depth within object bounding boxes provides estimated object depths
 
-[5] Object Detection: Traffic Lights: https://github.com/sovit-123/TrafficLight-Detection-Using-YOLOv3
+3. **Lane Detection**:
+   - YOLO Pv2 identifies and outlines lane markings
 
-[6] Object Detection: Road Signs: https://github.com/Anantmishra1729/Road-sign-detection
+4. **3D Visualization**:
+   - Blender is used to create a 3D representation of the detected objects and their estimated positions
 
-[7] YOLO 3-D bounding boxes: https://github.com/ruhyadi/YOLO3D
+## Future Improvements
 
-[8] Pedestrian keypoint detection: https://github.com/ZheC/Realtime MultiPerson Pose Estimation
+- Implement instance/panoptic segmentation for more accurate object detection and depth estimation
+- Integrate additional networks for specialized detection tasks (e.g., pedestrian keypoint detection)
+- Enhance 3D visualization capabilities
 
+## References
 
+1. Lane Detection: [LaneNet](https://github.com/IrohXu/lanenet-lane-detection-pytorch)
+2. Monocular Depth Estimation: [MiDaS](https://github.com/isl-org/MiDaS)
+3. Object Detection (Cars, Trucks, Traffic Lights, Road Signs): 
+   - [MobilenetV1-SSD](https://github.com/xiaogangLi/tensorflow-MobilenetV1-SSD)
+   - [YOLOv7](https://github.com/WongKinYiu/yolov7)
+4. Traffic Light Detection: [YOLOv3 for Traffic Lights](https://github.com/sovit-123/TrafficLight-Detection-Using-YOLOv3)
+5. Road Sign Detection: [Road Sign Detection](https://github.com/Anantmishra1729/Road-sign-detection)
+6. 3D Bounding Boxes: [YOLO3D](https://github.com/ruhyadi/YOLO3D)
+7. Pedestrian Keypoint Detection: [Multi-Person Pose Estimation](https://github.com/ZheC/Realtime_Multi-Person_Pose_Estimation)
 
+## Acknowledgements
+
+Special thanks to Prof. Sanket for providing the front camera feed from his Tesla Model S, which was used as input data for this project.
